@@ -20,7 +20,7 @@ class JackTokenizer:
 
     def __init__ (self, filePath):
         self.file = open(filePath, "r").read()
-        self.tokens = p.findall(self.file)
+        self.tokens = self.p.findall(self.file)
         self.tokenIndex = 0
 
     def hasMoreTokens(self):
@@ -37,7 +37,7 @@ class JackTokenizer:
             return "&gt"
         elif (symbol == '"'):
             return "&quot"
-        elif (symbol == == '&'):
+        elif (symbol == '&'):
             return "&amp"
         else: 
             return symbol
@@ -53,7 +53,7 @@ class JackTokenizer:
         elif (re.match(self.stringPattern, token)):
             return "<stringConstant> {} </stringConstant>".format(token[1:len(token)-1])
         elif (re.match(self.symbolsPattern, token)):
-            return "<symbol> {} </symbol> ".format(self.symbolReplace(token))
+            return "<symbol> {} </symbol> ".format(self.replacingSymbol(token))
         else:
             return "<unidentifiedToken> {} </unidentifiedToken> ".format(token)
 
@@ -69,3 +69,8 @@ class JackTokenizer:
 
         print("</tokens>", file=file)
         file.close()
+
+    
+a = JackTokenizer("classMain.jack")
+
+a.analyzer()
