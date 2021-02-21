@@ -2,6 +2,7 @@
 
 ## Computer Engineering
 ## Subject: Compilers 
+## Developed by Daniela Carvalho and André Luiz
 
 Development of a lexical analyzer in the Python 3 programming language in order to identify, through a code made available by the professor in the Jack language, the language tokens, among them:
     
