@@ -22,3 +22,22 @@ class JackTokenizer:
         self.file = open(filePath, "r").read()
         self.tokens = p.findall(self.file)
         self.tokenIndex = 0
+
+    def hasMoreTokens(self):
+        return self.tokenIndex <= len(self.tokens)-1
+
+    def advance(self):
+        if (self.hasMoreTokens()):
+            self.tokenIndex += 1
+    
+    def replacingSymbol(self, symbol):
+        if (symbol == "<"):
+            return "&lt"
+        elif (symbol == ">"):
+            return "&gt"
+        elif (symbol == '"'):
+            return "&quot"
+        elif (symbol == == '&'):
+            return "&amp"
+        else: 
+            return symbol
