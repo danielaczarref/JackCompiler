@@ -41,3 +41,31 @@ class JackTokenizer:
             return "&amp"
         else: 
             return symbol
+
+    def tokenType(self, token):
+        if (re.match(self.identifierPattern, token)):
+            if (token in self.commandsArray):
+                return "<keyword> {} </keyword>".format(token)
+            else :
+                return "<identifier> {} </identifier>".format(token)
+        elif (re.match(self.integerPattern, token)):
+            return "<integerConstant> {} </integerConstant>".format(token)
+        elif (re.match(self.stringPattern, token)):
+            return "<stringConstant> {} </stringConstant>".format(token[1:len(token)-1])
+        elif (re.match(self.symbolsPattern, token)):
+            return "<symbol> {} </symbol> ".format(self.symbolReplace(token))
+        else:
+            return "<unidentifiedToken> {} </unidentifiedToken> ".format(token)
+
+
+    def analyzer(self):
+        file = open("result.txt", "w")
+        print("<tokens>", file=file)
+        
+        while self.hasMoreTokens():
+            print(self.tokenType(self.tokens[self.tokenIndex]), file=file)
+
+            self.advance()
+
+        print("</tokens>", file=file)
+        file.close()
