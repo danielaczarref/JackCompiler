@@ -1,5 +1,6 @@
 import re
 
+
 class JackTokenizer:
     p = re.compile('".*"|[a-zA-Z_]+[a-zA-Z0-9_]*|[0-9]+|[+|*|/|\-|{|}|(|)|\[|\]|\.|,|;|<|>|=|~|&]')
 
@@ -18,19 +19,29 @@ class JackTokenizer:
         "&", "|", "<", ">", "=", "~"
     ]
 
-    def __init__ (self, filePath):
+    KEYWORD = "keyword"
+    IDENTIFIER = "identifier"
+    INTEGER_CONSTANT = "integerConstant"
+    STRING_CONSTANT = "stringConstant"
+    SYMBOL = "symbol"
+    UNIDENTIFIED_TOKEN = "unidentifiedToken"
+
+    def __init__(self, filePath):
         self.file = open(filePath, "r").read()
         self.tokens = self.p.findall(self.file)
         self.tokenIndex = 0
 
     def hasMoreTokens(self):
-        return self.tokenIndex <= len(self.tokens)-1
+        return self.tokenIndex <= len(self.tokens) - 1
 
     def advance(self):
         if (self.hasMoreTokens()):
             self.tokenIndex += 1
-    
-    def replacingSymbol(self, symbol):
+
+    def getToken(self):
+        return self.replaceSymbol(self.tokens[self.tokenIndex])
+
+    def replaceSymbol(self, symbol):
         if (symbol == "<"):
             return "&lt"
         elif (symbol == ">"):
@@ -39,38 +50,21 @@ class JackTokenizer:
             return "&quot"
         elif (symbol == '&'):
             return "&amp"
-        else: 
+        else:
             return symbol
 
-    def tokenType(self, token):
+    def tokenType(self):
+        token = self.getToken()
         if (re.match(self.identifierPattern, token)):
             if (token in self.commandsArray):
-                return "<keyword> {} </keyword>".format(token)
-            else :
-                return "<identifier> {} </identifier>".format(token)
+                return self.KEYWORD
+            else:
+                return self.IDENTIFIER
         elif (re.match(self.integerPattern, token)):
-            return "<integerConstant> {} </integerConstant>".format(token)
+            return self.INTEGER_CONSTANT
         elif (re.match(self.stringPattern, token)):
-            return "<stringConstant> {} </stringConstant>".format(token[1:len(token)-1])
+            return self.STRING_CONSTANT
         elif (re.match(self.symbolsPattern, token)):
-            return "<symbol> {} </symbol> ".format(self.replacingSymbol(token))
+            return self.SYMBOL
         else:
-            return "<unidentifiedToken> {} </unidentifiedToken> ".format(token)
-
-
-    def analyzer(self):
-        file = open("result.txt", "w")
-        print("<tokens>", file=file)
-        
-        while self.hasMoreTokens():
-            print(self.tokenType(self.tokens[self.tokenIndex]), file=file)
-
-            self.advance()
-
-        print("</tokens>", file=file)
-        file.close()
-
-    
-a = JackTokenizer("classMain.jack")
-
-a.analyzer()
+            return self.UNIDENTIFIED_TOKEN
