@@ -174,7 +174,7 @@ class AnalisadorSintatico:
 
     def compileParameterList(self):
         self.printXMLNameplate(
-            "\t\t\t")  # TODO(): o corpo desse while deve ser encapsulado no metodo compileParameterList
+            "\t\t\t")
         self.tokenizer.advance()
         if (self.tokenizer.tokenType() != self.tokenizer.IDENTIFIER):
             return False
