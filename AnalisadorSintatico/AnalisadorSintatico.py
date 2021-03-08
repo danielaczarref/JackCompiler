@@ -66,16 +66,3 @@ class Engine:
 
 
         return True  # Tudo ok, é uma classe
-
-
-
-
-
-
-a = Engine("main.jack", "result.txt")
-
-
-# while j.hasMoreTokens():
-#     print("{} -> {}".format(j.tokenType(), j.getToken()))
-#
-#     j.advance()
