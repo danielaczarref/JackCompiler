@@ -1,6 +1,6 @@
-from AnalisadorSintatico import Engine
+from AnalisadorSintatico import AnalisadorSintatico
 
 
 
-a = Engine("main.jack", "result.txt")
+a = AnalisadorSintatico("main.jack", "result.txt")
 

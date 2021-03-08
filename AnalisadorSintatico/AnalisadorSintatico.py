@@ -10,7 +10,7 @@ def printClosingXMLNameplate(tag):
     print("</{}>".format(tag))
 
 
-class Engine:
+class AnalisadorSintatico:
 
     def __init__(self, input_file, output):
         self.tokenizer = JackTokenizer(input_file)
