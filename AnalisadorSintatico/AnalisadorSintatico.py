@@ -55,7 +55,8 @@ class AnalisadorSintatico:
 
 
         # Esperando uma ou varias subroutineDec
-        # Todo(): compileSubroutineDec()
+        while (self.tokenizer.getToken() in ["constructor", "function", "method"]):
+            self.compileSubroutineDec()
 
 
         if (self.tokenizer.getToken() != "}"):
@@ -76,12 +77,15 @@ class AnalisadorSintatico:
         self.tokenizer.advance()
 
         # devo identificar que tipo de identificador (int | char | boolean | className)? O tipo aqui ta indo como uma keyword
-        if(self.tokenizer.getToken() not in ["int", "char", "boolean"]):  # nao considerei que o tipo pode ser className.
+        if(self.tokenizer.getToken() not in ["int", "char", "boolean"]):  # Todo(): nao considerei que o tipo pode ser className.
             return False
 
         self.printXMLNameplate("\t\t\t")
 
         self.tokenizer.advance()
+
+        if (self.tokenizer.tokenType() != self.tokenizer.IDENTIFIER):
+            return False
 
         while self.tokenizer.tokenType() == self.tokenizer.IDENTIFIER:  # aqui podemos ter uma declaração assim: static boolean var1,var2,var3;
             self.printXMLNameplate("\t\t\t")
@@ -92,8 +96,6 @@ class AnalisadorSintatico:
                 self.tokenizer.advance()
 
 
-
-
         if(self.tokenizer.getToken() != ";"):
             return False
 
@@ -102,5 +104,86 @@ class AnalisadorSintatico:
 
         self.tokenizer.advance()   # avanca e passa o controle de volta ao metodo compileClass
         printClosingXMLNameplate("classVarDec", "\t\t")
+
+    def compileSubroutineDec(self):
+        printOpenningXMLNameplate("subroutineDec", "\t\t")
+
+        self.printXMLNameplate("\t\t\t")
+        self.tokenizer.advance()
+
+        # esperamos o tipo : void ou type
+        if(self.tokenizer.getToken() not in ["void", "int", "char", "boolean"]): # className?
+            return False
+
+        self.printXMLNameplate("\t\t\t")
+        self.tokenizer.advance()
+
+        if(self.tokenizer.tokenType() != self.tokenizer.IDENTIFIER):
+            return False
+
+        self.printXMLNameplate("\t\t\t")
+
+        self.tokenizer.advance()
+
+        if(self.tokenizer.getToken() != "("):
+            return False
+        self.printXMLNameplate("\t\t\t")
+
+        self.tokenizer.advance()
+
+        # if(self.tokenizer.getToken() not in ["void", "int", "char", "boolean"]):
+        #     return False  # esperamos um type aqui
+        #
+        # self.printXMLNameplate("\t\t\t")
+        # self.tokenizer.advance()
+
+
+
+        while self.tokenizer.getToken() in ["int", "char", "boolean"]:  # aqui podemos ter uma declaração assim:  boolean var1, char var2, int var3;
+            self.compileParameterList()
+
+
+        if(self.tokenizer.getToken() != ")"):
+            return False
+
+        self.printXMLNameplate("\t\t\t")
+        self.tokenizer.advance()
+
+        if(self.tokenizer.getToken() != "{"):
+            return False
+
+        self.printXMLNameplate("\t\t\t")
+        self.tokenizer.advance()
+
+        printOpenningXMLNameplate("subroutineBody", "\t\t\t")
+
+        # Todo(): compileVarDec*()
+        printOpenningXMLNameplate("varDec", "\t\t\t\t")
+        printClosingXMLNameplate("varDec", "\t\t\t\t")
+        printOpenningXMLNameplate("varDec", "\t\t\t\t")
+        printClosingXMLNameplate("varDec", "\t\t\t\t")
+
+        # Todo(): compileStatement*()
+        printOpenningXMLNameplate("Xstatement", "\t\t\t\t")
+        printClosingXMLNameplate("Ystatement", "\t\t\t\t")
+
+        printClosingXMLNameplate("subroutineBody", "\t\t\t")
+
+
+        printClosingXMLNameplate("subroutineDec", "\t\t")
+
+    def compileParameterList(self):
+        self.printXMLNameplate(
+            "\t\t\t")  # TODO(): o corpo desse while deve ser encapsulado no metodo compileParameterList
+        self.tokenizer.advance()
+        if (self.tokenizer.tokenType() != self.tokenizer.IDENTIFIER):
+            return False
+        self.printXMLNameplate("\t\t\t")
+        self.tokenizer.advance()
+
+        if (self.tokenizer.getToken() == ","):
+            self.printXMLNameplate("\t\t\t")
+            self.tokenizer.advance()
+
 
 

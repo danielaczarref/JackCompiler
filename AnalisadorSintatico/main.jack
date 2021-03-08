@@ -1,6 +1,10 @@
 class Main {
 
-    static boolean test,test2,teste3;
-    static boolean testando;
+    static boolean test, test2, teste3;
+    static char testando;
     static boolean funcionou, mesmo;
+
+    function void main(char foo, int bar, boolean bol) {
+
+    }
 }
