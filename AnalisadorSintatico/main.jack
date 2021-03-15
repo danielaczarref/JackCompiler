@@ -5,6 +5,7 @@ class Main {
     static boolean funcionou, mesmo;
 
     function void main(char foo, int bar, boolean bol) {
-
+        var int olaMundo, olaGlobo;
+        var int olaola;
     }
 }

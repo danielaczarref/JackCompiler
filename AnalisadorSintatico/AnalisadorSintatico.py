@@ -157,20 +157,19 @@ class AnalisadorSintatico:
 
         printOpenningXMLNameplate("subroutineBody", "\t\t\t")
 
-        # Todo(): compileVarDec*()
-        printOpenningXMLNameplate("varDec", "\t\t\t\t")
-        printClosingXMLNameplate("varDec", "\t\t\t\t")
-        printOpenningXMLNameplate("varDec", "\t\t\t\t")
-        printClosingXMLNameplate("varDec", "\t\t\t\t")
+        while self.tokenizer.getToken() in ["var"]:  # aqui podemos ter uma declaração assim:  boolean var1, char var2, int var3;
+            self.compileVarDec()
 
-        # Todo(): compileStatement*()
-        printOpenningXMLNameplate("Xstatement", "\t\t\t\t")
-        printClosingXMLNameplate("Ystatement", "\t\t\t\t")
+
+        while self.tokenizer.getToken() in ["let", "if", "while", "do", "return"]:  # aqui podemos ter uma declaração assim:  boolean var1, char var2, int var3;
+            self.compileStatements()
+
+
+
 
         printClosingXMLNameplate("subroutineBody", "\t\t\t")
 
 
-        printClosingXMLNameplate("subroutineDec", "\t\t")
 
     def compileParameterList(self):
         self.printXMLNameplate(
@@ -185,5 +184,77 @@ class AnalisadorSintatico:
             self.printXMLNameplate("\t\t\t")
             self.tokenizer.advance()
 
+    def compileVarDec(self):
+        printOpenningXMLNameplate("varDec", "\t\t\t\t")
+        self.printXMLNameplate("\t\t\t\t\t")
+        self.tokenizer.advance()
+        if (self.tokenizer.getToken() not in ["int", "char", "boolean"]):  # className?
+            return False
+        self.printXMLNameplate("\t\t\t\t\t")
+        self.tokenizer.advance()
 
+
+
+        while self.tokenizer.tokenType() == self.tokenizer.IDENTIFIER:
+            self.printXMLNameplate("\t\t\t\t\t")
+            self.tokenizer.advance()
+            if (self.tokenizer.getToken() == ","):
+                self.printXMLNameplate("\t\t\t\t\t")
+                self.tokenizer.advance()
+
+
+        if(self.tokenizer.getToken() != ";"):
+            return False
+
+        self.printXMLNameplate("\t\t\t\t\t")
+        self.tokenizer.advance()
+        printClosingXMLNameplate("varDec", "\t\t\t\t")
+
+    def compileStatements(self):
+
+        if(self.tokenizer.getToken() == "let"):
+            self.compileLet()
+        elif (self.tokenizer.getToken() == "if"):
+            pass
+            #  self.compileIf()
+        elif (self.tokenizer.getToken() == "while"):
+            pass
+            # self.compileWhile()
+        elif (self.tokenizer.getToken() == "do"):
+            pass
+            # self.compileDo()
+        elif (self.tokenizer.getToken() == "return"):
+            pass
+            # self.compileReturn()
+        else:
+            return False
+
+
+    def compileLet(self): # apenas aceita esse formato -> let varName = expression ;
+        printOpenningXMLNameplate("letStatement", "\t\t\t\t")
+        self.printXMLNameplate("\t\t\t\t")  # print letStatement
+        self.tokenizer.advance()
+        if(self.tokenizer.tokenType() != self.tokenizer.IDENTIFIER):
+            return False
+        self.printXMLNameplate("\t\t\t\t")  # print varName
+        self.tokenizer.advance()
+
+
+
+        self.printXMLNameplate("\t\t\t\t")  # print =
+        self.tokenizer.advance()
+
+        # Todo: compileExpression();
+
+
+        if (self.tokenizer.getToken() != ";"):
+            return False
+        self.printXMLNameplate("\t\t\t\t")  # print =
+        self.tokenizer.advance()
+
+        printClosingXMLNameplate("letStatement", "\t\t\t\t")
+
+
+    def compileExpression(self):
+        return;
 
