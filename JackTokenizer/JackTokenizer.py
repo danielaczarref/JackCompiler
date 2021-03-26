@@ -41,6 +41,9 @@ class JackTokenizer:
     def getToken(self):
         return self.replaceSymbol(self.tokens[self.tokenIndex])
 
+    def peekToken(self):
+        return self.replaceSymbol(self.tokens[self.tokenIndex + 1])
+
     def replaceSymbol(self, symbol):
         if (symbol == "<"):
             return "&lt"
@@ -55,6 +58,22 @@ class JackTokenizer:
 
     def tokenType(self):
         token = self.getToken()
+        if (re.match(self.identifierPattern, token)):
+            if (token in self.commandsArray):
+                return self.KEYWORD
+            else:
+                return self.IDENTIFIER
+        elif (re.match(self.integerPattern, token)):
+            return self.INTEGER_CONSTANT
+        elif (re.match(self.stringPattern, token)):
+            return self.STRING_CONSTANT
+        elif (re.match(self.symbolsPattern, token)):
+            return self.SYMBOL
+        else:
+            return self.UNIDENTIFIED_TOKEN
+
+    def peekTokenType(self):
+        token = self.peekToken()
         if (re.match(self.identifierPattern, token)):
             if (token in self.commandsArray):
                 return self.KEYWORD

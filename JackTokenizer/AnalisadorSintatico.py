@@ -1,4 +1,5 @@
 from JackTokenizer import JackTokenizer
+import re
 
 
 
@@ -218,8 +219,8 @@ class AnalisadorSintatico:
             pass
             #  self.compileIf()
         elif (self.tokenizer.getToken() == "while"):
-            pass
-            # self.compileWhile()
+            self.compileWhile()
+    
         elif (self.tokenizer.getToken() == "do"):
             pass
             # self.compileDo()
@@ -256,27 +257,101 @@ class AnalisadorSintatico:
 
         printClosingXMLNameplate("letStatement", "\t\t\t\t")
 
+    def compileWhile(self):
+        return True
 
-    # def compileExpression(self):
-    #     printOpenningXMLNameplate("expression", "\t\t\t\t")
-    #     self.printXMLNameplate("\t\t\t\t") 
-    #     # self.compileTerm()
-        
-    # def compileTerm(self):
-    #     printOpenningXMLNameplate("term", "\t\t\t\t\t")
-        
-    #     aux = False
-    #     if (self.tokenizer.INTEGER_CONSTANT):
-    #         aux = True
-    #         self.printXMLNameplate("\t\t\t\t\t") 
-    #     elif (self.tokenizer.STRING_CONSTANT):
-    #         aux = True
-    #         self.printXMLNameplate("\t\t\t\t\t") 
-    #     elif (self.tokenizer.KEYWORD):
-    #         key = self.tokenizer.KEYWORD
-    #         print('teste key: ' + key)
 
-    #         if key not in ("true", "false", "null", "this"):
-    #             return False
-    #         aux = True
-    #         self.printXMLNameplate("\t\t\t\t\t")
+    def compileExpression(self):
+        printOpenningXMLNameplate("expression", "\t\t\t\t")
+        self.printXMLNameplate("\t\t\t\t") 
+        self.compileTerm()
+
+        while (self.tokenizer.getToken() in ["+", "-", "*", "/", "&", "|", "<", ">", "="]):
+            self.printXMLNameplate("\t\t\t\t\t") 
+            self.tokenizer.advance()
+            self.compileTerm()
+        
+    def compileTerm(self):
+        printOpenningXMLNameplate("term", "\t\t\t\t\t")
+        
+        aux = False
+        if (self.tokenizer.tokenType() == self.tokenizer.INTEGER_CONSTANT):
+            aux = True
+            self.printXMLNameplate("\t\t\t\t\t") 
+        elif (self.tokenizer.tokenType() == self.tokenizer.STRING_CONSTANT):
+            aux = True
+            self.printXMLNameplate("\t\t\t\t\t") 
+        elif (self.tokenizer.KEYWORD):
+            key = self.tokenizer.KEYWORD
+            print('teste key: ' + key)
+
+            if key not in ("true", "false", "null", "this"):
+                return False
+            aux = True
+            self.printXMLNameplate("\t\t\t\t\t")
+        elif (self.tokenizer.getToken == "("):
+            self.printXMLNameplate("\t\t\t\t\t")
+            self.tokenizer.advance()
+            self.compileExpression()
+
+            if (self.tokenizer.getToken() != ")"):
+               return False
+
+            aux = True
+            self.printXMLNameplate("\t\t\t\t\t")
+
+        elif (self.tokenizer.getToken() in ["-","~"]):
+            self.printXMLNameplate("\t\t\t\t\t")
+            self.tokenizer.advance()
+            self.compileTerm()
+        
+        elif (self.tokenizer.tokenType()== self.tokenizer.IDENTIFIER):
+            self.printXMLNameplate("\t\t\t\t\t")
+            self.tokenizer.advance()
+
+            if (self.tokenizer.getToken() == "["):
+                self.printXMLNameplate("\t\t\t\t\t")
+                self.tokenizer.advance()
+                self.compileExpression()
+
+                if (self.tokenizer.getToken != "]"):
+                    return False
+                
+                aux = True
+                self.printXMLNameplate("\t\t\t\t\t")
+
+            elif (self.tokenizer.getToken() == "("):
+                self.printXMLNameplate("\t\t\t\t\t")
+                self.tokenizer.advance()
+                #self.compileExpressionList()
+                #todo compile expression list
+
+                if (self.tokenizer.getToken() != ")"):
+                    return False
+                
+                aux = True
+                self.printXMLNameplate("\t\t\t\t\t")
+
+            elif (self.tokenizer.getToken() == "."):
+                self.printXMLNameplate("\t\t\t\t\t")
+                self.tokenizer.advance()
+
+                if (self.tokenizer.tokenType() != self.tokenizer.IDENTIFIER):
+                    return False
+
+                self.printXMLNameplate("\t\t\t\t\t")
+                self.tokenizer.advance()
+
+                if (self.tokenizer.getToken() != "("):
+                    return False
+                self.printXMLNameplate("\t\t\t\t\t")
+                self.tokenizer.advance()
+                #self.compileExpressionList
+
+                if (self.tokenizer.getToken() != ")"):
+                    return False
+                self.printXMLNameplate("\t\t\t\t\t")
+                self.tokenizer.advance()
+        if aux == True:
+            self.tokenizer.advance()
+        printOpenningXMLNameplate("term", "\t\t\t\t\t")
