@@ -13,15 +13,14 @@ def printClosingXMLNameplate(tag, ident):
 
 class AnalisadorSintatico:
 
-    def __init__(self, input_file, output):
+    def __init__(self, input_file):
         self.tokenizer = JackTokenizer(input_file)
-        self.output_file = open(output, "w")
 
+    def compile(self):
         if(self.compileClass()):
-            print("Success")
+            print ("Success!")
         else:
-            print("Error")
-        self.output_file.close()
+            print ("Error")
 
     def printXMLNameplate(self, ident):
         print("{}<{}> {} </{}>".format(ident, self.tokenizer.tokenType(), self.tokenizer.getToken(), self.tokenizer.tokenType()))
@@ -219,7 +218,8 @@ class AnalisadorSintatico:
             pass
             #  self.compileIf()
         elif (self.tokenizer.getToken() == "while"):
-            self.compileWhile()
+            pass
+            #self.compileWhile()
     
         elif (self.tokenizer.getToken() == "do"):
             pass
@@ -245,7 +245,7 @@ class AnalisadorSintatico:
         self.printXMLNameplate("\t\t\t\t")  # print =
         self.tokenizer.advance()
 
-        # self.compileExpression()
+        self.compileExpression()
 
         # Todo: compileExpression();
 
@@ -263,24 +263,29 @@ class AnalisadorSintatico:
 
     def compileExpression(self):
         printOpenningXMLNameplate("expression", "\t\t\t\t")
-        self.printXMLNameplate("\t\t\t\t") 
         self.compileTerm()
 
         while (self.tokenizer.getToken() in ["+", "-", "*", "/", "&", "|", "<", ">", "="]):
             self.printXMLNameplate("\t\t\t\t\t") 
             self.tokenizer.advance()
             self.compileTerm()
-        
+        if (self.tokenizer.getToken() != ";"):
+            return False
+        self.printXMLNameplate("\t\t\t\t")  # print =
+        self.tokenizer.advance()
+
+        printClosingXMLNameplate("expression", "\t\t\t\t")
+
     def compileTerm(self):
         printOpenningXMLNameplate("term", "\t\t\t\t\t")
         
         aux = False
         if (self.tokenizer.tokenType() == self.tokenizer.INTEGER_CONSTANT):
             aux = True
-            self.printXMLNameplate("\t\t\t\t\t") 
+            self.printXMLNameplate("\t\t\t\t\t\t") 
         elif (self.tokenizer.tokenType() == self.tokenizer.STRING_CONSTANT):
             aux = True
-            self.printXMLNameplate("\t\t\t\t\t") 
+            self.printXMLNameplate("\t\t\t\t\t\t") 
         elif (self.tokenizer.KEYWORD):
             key = self.tokenizer.KEYWORD
             print('teste key: ' + key)
@@ -288,9 +293,9 @@ class AnalisadorSintatico:
             if key not in ("true", "false", "null", "this"):
                 return False
             aux = True
-            self.printXMLNameplate("\t\t\t\t\t")
+            self.printXMLNameplate("\t\t\t\t\t\t")
         elif (self.tokenizer.getToken == "("):
-            self.printXMLNameplate("\t\t\t\t\t")
+            self.printXMLNameplate("\t\t\t\t\t\t")
             self.tokenizer.advance()
             self.compileExpression()
 
@@ -298,19 +303,19 @@ class AnalisadorSintatico:
                return False
 
             aux = True
-            self.printXMLNameplate("\t\t\t\t\t")
+            self.printXMLNameplate("\t\t\t\t\t\t")
 
         elif (self.tokenizer.getToken() in ["-","~"]):
-            self.printXMLNameplate("\t\t\t\t\t")
+            self.printXMLNameplate("\t\t\t\t\t\t")
             self.tokenizer.advance()
             self.compileTerm()
         
         elif (self.tokenizer.tokenType()== self.tokenizer.IDENTIFIER):
-            self.printXMLNameplate("\t\t\t\t\t")
+            self.printXMLNameplate("\t\t\t\t\t\t")
             self.tokenizer.advance()
 
             if (self.tokenizer.getToken() == "["):
-                self.printXMLNameplate("\t\t\t\t\t")
+                self.printXMLNameplate("\t\t\t\t\t\t")
                 self.tokenizer.advance()
                 self.compileExpression()
 
@@ -318,10 +323,10 @@ class AnalisadorSintatico:
                     return False
                 
                 aux = True
-                self.printXMLNameplate("\t\t\t\t\t")
+                self.printXMLNameplate("\t\t\t\t\t\t")
 
             elif (self.tokenizer.getToken() == "("):
-                self.printXMLNameplate("\t\t\t\t\t")
+                self.printXMLNameplate("\t\t\t\t\t\t")
                 self.tokenizer.advance()
                 #self.compileExpressionList()
                 #todo compile expression list
@@ -330,27 +335,27 @@ class AnalisadorSintatico:
                     return False
                 
                 aux = True
-                self.printXMLNameplate("\t\t\t\t\t")
+                self.printXMLNameplate("\t\t\t\t\t\t")
 
             elif (self.tokenizer.getToken() == "."):
-                self.printXMLNameplate("\t\t\t\t\t")
+                self.printXMLNameplate("\t\t\t\t\t\t")
                 self.tokenizer.advance()
 
                 if (self.tokenizer.tokenType() != self.tokenizer.IDENTIFIER):
                     return False
 
-                self.printXMLNameplate("\t\t\t\t\t")
+                self.printXMLNameplate("\t\t\t\t\t\t")
                 self.tokenizer.advance()
 
                 if (self.tokenizer.getToken() != "("):
                     return False
-                self.printXMLNameplate("\t\t\t\t\t")
+                self.printXMLNameplate("\t\t\t\t\t\t")
                 self.tokenizer.advance()
                 #self.compileExpressionList
 
                 if (self.tokenizer.getToken() != ")"):
                     return False
-                self.printXMLNameplate("\t\t\t\t\t")
+                self.printXMLNameplate("\t\t\t\t\t\t")
                 self.tokenizer.advance()
         if aux == True:
             self.tokenizer.advance()
