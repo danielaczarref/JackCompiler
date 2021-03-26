@@ -219,16 +219,28 @@ class AnalisadorSintatico:
     
         elif (self.tokenizer.getToken() == "do"):
             pass
-            self.compileDo()
+            #self.compileDo()
         elif (self.tokenizer.getToken() == "return"):
-            pass
-            # self.compileReturn()
+            self.compileReturn()
         else:
             return False
 
 
-    def compileDo(self): #983346583
+    def compileReturn(self): 
+        printOpenningXMLNameplate("returnStatement", "\t\t\t\t")
+        self.printXMLNameplate("\t\t\t\t\t")
+        self.tokenizer.advance()
+        print('mulan: ' + self.tokenizer.getToken())
 
+        if (self.tokenizer.getToken() == ";"):
+            self.printXMLNameplate("\t\t\t\t\t")
+            printClosingXMLNameplate("returnStatement", "\t\t\t\t")
+        else:
+            self.compileExpression()
+            if (self.tokenizer.getToken() != ";"):
+                return False
+            self.printXMLNameplate("\t\t\t\t\t")
+            printClosingXMLNameplate("returnStatement", "\t\t\t\t")
 
 
 
@@ -301,8 +313,6 @@ class AnalisadorSintatico:
         self.tokenizer.advance()
 
         self.compileExpression()
-
-        # Todo: compileExpression();
 
 
         if (self.tokenizer.getToken() != ";"):
