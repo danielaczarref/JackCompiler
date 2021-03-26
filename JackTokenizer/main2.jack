@@ -7,6 +7,23 @@ class Main {
     function void main(char foo, int bar, boolean bol) {
         var int olaMundo, olaGlobo;
         var int olaola, oiDani;
-        let variable = "Teste";
+        let x = 23;
+        if(3>2){
+            let x = 34;
+        }else{
+            let x = 54;
+        }
+
+        while(2>3){
+            if(100>3){
+                let x = 55;
+            }else{
+                let y = 100;
+            }
+
+            do ;
+
+            
+        }
     }
 }
