@@ -1,18 +1,16 @@
 class Main {
     static boolean test;    
                             
-    function void main() {
-      var SquareGame game;
-      let game = SquareGame.new();
-      do game.run();
-      do game.dispose();
+    function void main(char foo, int bar, boolean bol) {
+      var int olaMundo, olaGlobo;
+      var int olaola, oiDani;
       return;
     }
 
-    function void test() {  
+    function void test(char foo, int bar) {
         var int i, j;       
-        var String s;
-        var Array a;
+        var int s;
+        var int a;
         if (false) {
             let s = "string constant";
             let s = null;

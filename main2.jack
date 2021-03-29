@@ -21,6 +21,6 @@ class Main {
                 let y = 100;
             }            
         }
-        return "Daniela";
+        return;
     }
 }
