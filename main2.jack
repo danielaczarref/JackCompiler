@@ -1,13 +1,10 @@
 class Main {
-
-    static boolean test, test2, teste3;
-    static char testando;
-    static boolean funcionou, mesmo;
-
-    function void main(char foo, int bar, boolean bol) {
-        var int olaMundo, olaGlobo;
+    static int test;
+    function void main(char foo) {
+        var int variable1, variable2;
         var int olaola, oiDani;
         let x = 23;
+
         if(3>2){
             let x = 34;
         }else{
@@ -23,4 +20,6 @@ class Main {
         }
         return;
     }
+
+
 }

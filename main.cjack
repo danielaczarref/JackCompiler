@@ -1,0 +1,42 @@
+<class>
+<keyword> class </keyword>
+<identifier> Main </identifier>
+<symbol> { </symbol>
+<classVarDec>
+<keyword> static </keyword>
+<keyword> int </keyword>
+<identifier> test </identifier>
+<symbol> ; </symbol>
+</classVarDec>
+<subroutineDec>
+<keyword> function </keyword>
+<keyword> void </keyword>
+<identifier> main </identifier>
+<symbol> ( </symbol>
+<keyword> char </keyword>
+<identifier> foo </identifier>
+<symbol> ) </symbol>
+<symbol> { </symbol>
+<subroutineBody>
+<varDec>
+<keyword> var </keyword>
+<keyword> int </keyword>
+<identifier> variable1 </identifier>
+<symbol> , </symbol>
+<identifier> variable2 </identifier>
+<symbol> ; </symbol>
+</varDec>
+<varDec>
+<keyword> var </keyword>
+<keyword> int </keyword>
+<identifier> a </identifier>
+<symbol> ; </symbol>
+</varDec>
+<ifStatement>
+<keyword> if </keyword>
+<symbol> ( </symbol>
+<expression>
+<term>
+</expression>
+<identifier> a </identifier>
+</subroutineBody>

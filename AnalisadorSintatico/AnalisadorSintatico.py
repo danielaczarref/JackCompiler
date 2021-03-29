@@ -67,7 +67,6 @@ class AnalisadorSintatico:
         while (self.tokenizer.getToken() in ["constructor", "function", "method"]):
             self.compileSubroutineDec()
 
-        # self.tokenizer.advance()
 
         if (self.tokenizer.getToken() != "}"):
             self.errorMSG = 'Method compileClass(). Expected symbol "}}" but {} was given'.format(self.tokenizer.getToken())
@@ -90,9 +89,9 @@ class AnalisadorSintatico:
         self.tokenizer.advance()
 
         # devo identificar que tipo de identificador (int | char | boolean | className)? O tipo aqui ta indo como uma keyword
-        if(self.tokenizer.getToken() not in ["int", "char", "boolean"]):  # Todo(): nao considerei que o tipo pode ser className.
-            self.errorMSG = "Method compileClassVarDec(). Expected type (int,char,boolean) but {} was given".format(self.tokenizer.getToken())
+        if(self.tokenizer.getToken() not in ["int", "char", "boolean"]): # Todo(): nao considerei que o tipo pode ser className.
 
+            self.errorMSG = "Method compileClassVarDec(). Expected type (int,char,boolean, className) but {} was given".format(self.tokenizer.getToken())
             return False
 
         self.printXMLNameplate("\t\t\t")

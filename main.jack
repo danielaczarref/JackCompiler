@@ -1,26 +1,17 @@
 class Main {
-    static boolean test;    
-                            
-    function void main(char foo, int bar, boolean bol) {
-      var int olaMundo, olaGlobo;
-      var int olaola, oiDani;
-      return;
+    static int test;
+    function void main(char foo) {
+        var int variable1, variable2;
+        var int a;
+
+        if(a>2){
+            return "Verdadeiro"
+        }else{
+            return "Falso"
+        }
+        let a = 3;
+
     }
 
-    function void test(char foo, int bar) {
-        var int i, j;       
-        var int s;
-        var int a;
-        if (false) {
-            let s = "string constant";
-            let s = null;
-            let a[1] = a[2];
-        }
-        else {              
-            let i = i * (-j);
-            let j = j / (-2);   
-            let i = i | j;
-        }
-        return;
-    }
+
 }
