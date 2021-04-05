@@ -1,4 +1,5 @@
 from JackTokenizer.JackTokenizer import JackTokenizer
+from CodeGenerator.symbol import SymbolTable
 import re
 
 
@@ -11,6 +12,7 @@ class AnalisadorSintatico:
         self.tokenizer = JackTokenizer(input_file)
         self.output = open(input_file.split(".")[0]+".cjack", "a")
         self.errorMSG = None
+        self.globalTable = SymbolTable("globalTable")
 
     def compile(self):
         if(self.compileClass()):
@@ -83,7 +85,7 @@ class AnalisadorSintatico:
 
     def compileClassVarDec(self):
         self.printOpenningXMLNameplate("classVarDec", "\t\t")
-
+        kind = self.tokenizer.getToken()
         self.printXMLNameplate("\t\t\t")  # esperamos static ou field
 
         self.tokenizer.advance()
@@ -94,6 +96,8 @@ class AnalisadorSintatico:
             self.errorMSG = "Method compileClassVarDec(). Expected type (int,char,boolean, className) but {} was given".format(self.tokenizer.getToken())
             return False
 
+        type = self.tokenizer.getToken()
+
         self.printXMLNameplate("\t\t\t")
 
         self.tokenizer.advance()
@@ -101,9 +105,10 @@ class AnalisadorSintatico:
         if (self.tokenizer.tokenType() != self.tokenizer.IDENTIFIER):
             self.errorMSG = "Method compileClassVarDec(). Expected identifier but {} was given".format(self.tokenizer.tokenType())
             return False
-
+        names = []
         while self.tokenizer.tokenType() == self.tokenizer.IDENTIFIER:  # aqui podemos ter uma declaração assim: static boolean var1,var2,var3;
             self.printXMLNameplate("\t\t\t")
+            names.append(self.tokenizer.getToken())
             self.tokenizer.advance()
 
             if(self.tokenizer.getToken() == ","):
@@ -120,6 +125,8 @@ class AnalisadorSintatico:
 
 
         self.tokenizer.advance()   # avanca e passa o controle de volta ao metodo compileClass
+        for name in names:
+            self.globalTable.addIdentifier(name, type, kind, "?")
         self.printClosingXMLNameplate("classVarDec", "\t\t")
 
     def compileSubroutineDec(self):

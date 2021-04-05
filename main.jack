@@ -1,10 +1,12 @@
 class Main {
-    static int test;
+    static int test, test2;
+    static char test3, teste4;
+    field boolean teste6;
     function void main(char foo) {
         var int variable1, variable2;
-        var int a;
+        var int olaola, oiDani;
 
-        if(a>2){
+        if(4>2){
             return "Verdadeiro"
         }else{
             return "Falso"
