@@ -3,7 +3,6 @@ class SymbolTable():
 
     def __init__(self):
 
-        self.table = {}
 
         self.subroutineTable = {}
         self.fieldTable = {}
@@ -57,7 +56,19 @@ class SymbolTable():
         else:
             return False
 
-    def printTable(self):
-        print("Imprimindo tabela {}".format(self.reference))
-        for i in self.table.keys():
-            print(self.table[i])
+    def printStaticTable(self, ref):
+        print("\n---------------- Imprimindo tabela {}".format(ref))
+        for key in self.staticTable.keys():
+            print(self.staticTable.get(key))
+        print("------------------------------")
+    def printFieldTable(self, ref):
+        print("\n---------------- Imprimindo tabela {}".format(ref))
+        for key in self.fieldTable.keys():
+            print(self.fieldTable[key])
+        print("------------------------------")
+
+    def printSubroutineTable(self, ref):
+        print("\n---------------- Imprimindo tabela da subrotina: {}".format(ref))
+        for key in self.subroutineTable.keys():
+            print(self.subroutineTable[key])
+        print("------------------------------")
