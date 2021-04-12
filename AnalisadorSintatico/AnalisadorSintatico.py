@@ -12,8 +12,10 @@ class AnalisadorSintatico:
         self.tokenizer = JackTokenizer(input_file)
         self.output = open(input_file.split(".")[0]+".cJACK", "a")
         self.errorMSG = None
-        self.globalTable = SymbolTable("globalTable")
+        self.symbolTable = SymbolTable()
         self.className = None
+
+
 
     def compile(self):
         if(self.compileClass()):
@@ -44,6 +46,8 @@ class AnalisadorSintatico:
         self.printXMLNameplate()
         self.tokenizer.advance() # class
 
+        self.className = self.tokenizer.getToken()
+
         self.printXMLNameplate()
         self.tokenizer.advance() # className
 
@@ -68,14 +72,20 @@ class AnalisadorSintatico:
         self.printOpenningXMLNameplate("classVarDec")
 
 
+        kind = self.tokenizer.getToken().upper()
+
         self.printXMLNameplate()
         self.tokenizer.advance() # static ou field
+
+        tipo = self.tokenizer.getToken()
 
         self.printXMLNameplate()
         self.tokenizer.advance() # type
 
         if(self.tokenizer.tokenType() != self.tokenizer.IDENTIFIER):
             return False
+
+        self.symbolTable.addElement(self.tokenizer.getToken(), tipo, kind)
 
         self.printXMLNameplate()
         self.tokenizer.advance()  # type
@@ -86,11 +96,9 @@ class AnalisadorSintatico:
             self.tokenizer.advance()
             if (self.tokenizer.tokenType() != self.tokenizer.IDENTIFIER):
                 return False
+            self.symbolTable.addElement(self.tokenizer.getToken(), tipo, kind)
             self.printXMLNameplate()
             self.tokenizer.advance()
-
-
-
 
         self.printXMLNameplate()
         self.tokenizer.advance()
@@ -100,8 +108,16 @@ class AnalisadorSintatico:
     def compileSubroutineDec(self):
         self.printOpenningXMLNameplate("subroutineDec")
 
+        self.symbolTable.clear()
+
+        tipo = self.tokenizer.getToken()
+
+        if(tipo == "method"):
+            self.symbolTable.addElement("this", self.className, "ARG")
+
         self.printXMLNameplate()
         self.tokenizer.advance() # method, constructor, function
+
 
         self.printXMLNameplate()
         self.tokenizer.advance()  # type
@@ -139,15 +155,20 @@ class AnalisadorSintatico:
     def compileParameterList(self):
         self.printOpenningXMLNameplate("parameterList")
 
+        kind = "ARG"
+
         if(self.tokenizer.getToken() == ")"):
             self.printClosingXMLNameplate("parameterList")
             return True
 
+        tipo = self.tokenizer.getToken()
         self.printXMLNameplate()
         self.tokenizer.advance()  # type
 
         if(self.tokenizer.tokenType() != self.tokenizer.IDENTIFIER):
             return False
+
+        self.symbolTable.addElement(self.tokenizer.getToken(), tipo, kind)
 
         self.printXMLNameplate()
         self.tokenizer.advance()  # identifier
@@ -156,12 +177,14 @@ class AnalisadorSintatico:
             self.printXMLNameplate()
             self.tokenizer.advance()  # ,
 
+            tipo = self.tokenizer.getToken()
+
             self.printXMLNameplate()
             self.tokenizer.advance()  #
 
             if(self.tokenizer.tokenType() != self.tokenizer.IDENTIFIER):
                 return False
-
+            self.symbolTable.addElement(self.tokenizer.getToken(), tipo, kind)
             self.printXMLNameplate()
             self.tokenizer.advance()  #
         self.printClosingXMLNameplate("parameterList")
@@ -176,12 +199,15 @@ class AnalisadorSintatico:
         self.printXMLNameplate()
         self.tokenizer.advance()  #var
 
+        kind = "VAR"
+        tipo = self.tokenizer.getToken()
+
         self.printXMLNameplate()
         self.tokenizer.advance()  # type
 
         if(self.tokenizer.tokenType() != self.tokenizer.IDENTIFIER):
             return False
-
+        self.symbolTable.addElement(self.tokenizer.getToken(), tipo, kind)
         self.printXMLNameplate()
         self.tokenizer.advance()  # identifier
 
@@ -190,6 +216,7 @@ class AnalisadorSintatico:
             self.tokenizer.advance()  # t,
             if (self.tokenizer.tokenType() != self.tokenizer.IDENTIFIER):
                 return False
+            self.symbolTable.addElement(self.tokenizer.getToken(), tipo, kind)
             self.printXMLNameplate()
             self.tokenizer.advance()  #
 
