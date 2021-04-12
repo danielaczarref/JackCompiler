@@ -10,7 +10,7 @@ class AnalisadorSintatico:
     def __init__(self, input_file):
         self.input_file = input_file
         self.tokenizer = JackTokenizer(input_file)
-        self.output = open(input_file.split(".")[0]+".cJACK", "a")
+        self.output = open(input_file.split(".")[0]+".out", "a")
         self.errorMSG = None
         self.symbolTable = SymbolTable()
         self.className = None
@@ -27,13 +27,18 @@ class AnalisadorSintatico:
 
 
     def printXMLNameplate(self):
-        print("{}<{}> {} </{}>".format("", self.tokenizer.tokenType(), self.tokenizer.getToken(), self.tokenizer.tokenType()), file=self.output)
+        pass
+
+        # print("{}<{}> {} </{}>".format("", self.tokenizer.tokenType(), self.tokenizer.getToken(), self.tokenizer.tokenType()), file=self.output)
 
     def printOpenningXMLNameplate(self, tag):
-        print("{}<{}>".format("", tag), file=self.output)
+        pass
+
+        # print("{}<{}>".format("", tag), file=self.output)
 
     def printClosingXMLNameplate(self, tag):
-        print("{}</{}>".format("", tag), file=self.output)
+        pass
+        # print("{}</{}>".format("", tag), file=self.output)
 
 
     def compileClass(self):
@@ -65,6 +70,9 @@ class AnalisadorSintatico:
         self.tokenizer.advance() # }
 
         self.printClosingXMLNameplate("class")
+        self.symbolTable.printStaticTable("Static Table")
+        # self.symbolTable.printFieldTable("Field Table")
+
         return True  # Tudo ok, é uma classe
 
 
@@ -103,6 +111,9 @@ class AnalisadorSintatico:
         self.printXMLNameplate()
         self.tokenizer.advance()
         self.printClosingXMLNameplate("classVarDec")
+
+
+
         return True
 
     def compileSubroutineDec(self):
@@ -125,6 +136,7 @@ class AnalisadorSintatico:
         if(self.tokenizer.tokenType() != self.tokenizer.IDENTIFIER):
             return False
 
+        class_name = self.tokenizer.getToken()
 
         self.printXMLNameplate()
         self.tokenizer.advance()  # identifier
@@ -148,6 +160,9 @@ class AnalisadorSintatico:
 
         self.printXMLNameplate()
         self.tokenizer.advance()  # }
+
+
+        self.symbolTable.printSubroutineTable("Subroutine {}".format(class_name))
 
         self.printClosingXMLNameplate("subroutineDec")
         return True

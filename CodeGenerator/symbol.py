@@ -3,10 +3,9 @@ class SymbolTable():
 
     def __init__(self):
 
-        self.table = {}
 
         self.subroutineTable = {}
-        self.fieldTable = {}
+        # self.fieldTable = {}
         self.staticTable = {}
 
 
@@ -35,7 +34,7 @@ class SymbolTable():
 
         else:
             counter = self.field_counter
-            self.fieldTable[name] = [_type, kind, counter]
+            self.staticTable[name] = [_type, kind, counter]
             self.field_counter += 1
 
 
@@ -57,7 +56,15 @@ class SymbolTable():
         else:
             return False
 
-    def printTable(self):
-        print("Imprimindo tabela {}".format(self.reference))
-        for i in self.table.keys():
-            print(self.table[i])
+    def printStaticTable(self, ref):
+        print("\n---------------- Imprimindo tabela {}".format(ref))
+        for key in self.staticTable.keys():
+            print("{} -> {}".format(key, self.staticTable[key]))
+        print("------------------------------")
+
+
+    def printSubroutineTable(self, ref):
+        print("\n---------------- Imprimindo tabela da subrotina: {}".format(ref))
+        for key in self.subroutineTable.keys():
+            print("{} -> {}".format(key, self.subroutineTable[key]))
+        print("------------------------------")
