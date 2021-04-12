@@ -18,6 +18,10 @@ class JackTokenizer:
         ".", ",", ";", "+", "-", "*", "/",
         "&", "|", "<", ">", "=", "~"
     ]
+    operatorArray = [
+        '+', '-', '*', '/',
+        '&', '|', '<', '>', '='
+    ]
 
     KEYWORD = "keyword"
     IDENTIFIER = "identifier"

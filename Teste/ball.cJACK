@@ -1,0 +1,551 @@
+<class>
+<keyword> class </keyword>
+<identifier> Ball </identifier>
+<symbol> { </symbol>
+<classVarDec>
+<keyword> field </keyword>
+<keyword> int </keyword>
+<identifier> x </identifier>
+<symbol> , </symbol>
+<identifier> y </identifier>
+<symbol> ; </symbol>
+</classVarDec>
+<classVarDec>
+<keyword> field </keyword>
+<keyword> int </keyword>
+<identifier> lengthx </identifier>
+<symbol> , </symbol>
+<identifier> lengthy </identifier>
+<symbol> ; </symbol>
+</classVarDec>
+<classVarDec>
+<keyword> field </keyword>
+<keyword> int </keyword>
+<identifier> d </identifier>
+<symbol> , </symbol>
+<identifier> straightD </identifier>
+<symbol> , </symbol>
+<identifier> diagonalD </identifier>
+<symbol> ; </symbol>
+</classVarDec>
+<classVarDec>
+<keyword> field </keyword>
+<keyword> boolean </keyword>
+<identifier> invert </identifier>
+<symbol> , </symbol>
+<identifier> positivex </identifier>
+<symbol> , </symbol>
+<identifier> positivey </identifier>
+<symbol> ; </symbol>
+</classVarDec>
+<classVarDec>
+<keyword> field </keyword>
+<keyword> int </keyword>
+<identifier> leftWall </identifier>
+<symbol> , </symbol>
+<identifier> rightWall </identifier>
+<symbol> , </symbol>
+<identifier> topWall </identifier>
+<symbol> , </symbol>
+<identifier> bottomWall </identifier>
+<symbol> ; </symbol>
+</classVarDec>
+<classVarDec>
+<keyword> field </keyword>
+<keyword> int </keyword>
+<identifier> wall </identifier>
+<symbol> ; </symbol>
+</classVarDec>
+<subroutineDec>
+<keyword> constructor </keyword>
+<identifier> Ball </identifier>
+<identifier> new </identifier>
+<symbol> ( </symbol>
+<parameterList>
+<keyword> int </keyword>
+<identifier> Ax </identifier>
+<symbol> , </symbol>
+<keyword> int </keyword>
+<identifier> Ay </identifier>
+<symbol> , </symbol>
+<keyword> int </keyword>
+<identifier> AleftWall </identifier>
+<symbol> , </symbol>
+<keyword> int </keyword>
+<identifier> ArightWall </identifier>
+<symbol> , </symbol>
+<keyword> int </keyword>
+<identifier> AtopWall </identifier>
+<symbol> , </symbol>
+<keyword> int </keyword>
+<identifier> AbottomWall </identifier>
+</parameterList>
+<symbol> ) </symbol>
+<symbol> { </symbol>
+<compileStatements>
+<letStatement>
+<keyword> let </keyword>
+<identifier> x </identifier>
+<symbol> = </symbol>
+<compileExpression>
+<compileTerm>
+<identifier> Ax </identifier>
+</compileTerm>
+</compileExpression>
+<symbol> ; </symbol>
+</letStatement>
+<letStatement>
+<keyword> let </keyword>
+<identifier> y </identifier>
+<symbol> = </symbol>
+<compileExpression>
+<compileTerm>
+<identifier> Ay </identifier>
+</compileTerm>
+</compileExpression>
+<symbol> ; </symbol>
+</letStatement>
+<letStatement>
+<keyword> let </keyword>
+<identifier> leftWall </identifier>
+<symbol> = </symbol>
+<compileExpression>
+<compileTerm>
+<identifier> AleftWall </identifier>
+</compileTerm>
+</compileExpression>
+<symbol> ; </symbol>
+</letStatement>
+<letStatement>
+<keyword> let </keyword>
+<identifier> rightWall </identifier>
+<symbol> = </symbol>
+<compileExpression>
+<compileTerm>
+<identifier> ArightWall </identifier>
+</compileTerm>
+<symbol> - </symbol>
+<compileTerm>
+<integerConstant> 6 </integerConstant>
+</compileTerm>
+</compileExpression>
+<symbol> ; </symbol>
+</letStatement>
+<letStatement>
+<keyword> let </keyword>
+<identifier> topWall </identifier>
+<symbol> = </symbol>
+<compileExpression>
+<compileTerm>
+<identifier> AtopWall </identifier>
+</compileTerm>
+</compileExpression>
+<symbol> ; </symbol>
+</letStatement>
+<letStatement>
+<keyword> let </keyword>
+<identifier> bottomWall </identifier>
+<symbol> = </symbol>
+<compileExpression>
+<compileTerm>
+<identifier> AbottomWall </identifier>
+</compileTerm>
+<symbol> - </symbol>
+<compileTerm>
+<integerConstant> 6 </integerConstant>
+</compileTerm>
+</compileExpression>
+<symbol> ; </symbol>
+</letStatement>
+<letStatement>
+<keyword> let </keyword>
+<identifier> wall </identifier>
+<symbol> = </symbol>
+<compileExpression>
+<compileTerm>
+<integerConstant> 0 </integerConstant>
+</compileTerm>
+</compileExpression>
+<symbol> ; </symbol>
+</letStatement>
+<compileDo>
+<keyword> do </keyword>
+<identifier> show </identifier>
+<compileSubroutineCall>
+<symbol> ( </symbol>
+<compileExpressionList>
+<symbol> ) </symbol>
+</compileSubroutineCall>
+<symbol> ; </symbol>
+</compileDo>
+<returnStatement>
+<keyword> return </keyword>
+<compileExpression>
+<compileTerm>
+<keyword> this </keyword>
+</compileTerm>
+</compileExpression>
+<symbol> ; </symbol>
+</returnStatement>
+</compileStatements>
+<symbol> } </symbol>
+</subroutineDec>
+<subroutineDec>
+<keyword> method </keyword>
+<keyword> void </keyword>
+<identifier> dispose </identifier>
+<symbol> ( </symbol>
+<parameterList>
+</parameterList>
+<symbol> ) </symbol>
+<symbol> { </symbol>
+<compileStatements>
+<compileDo>
+<keyword> do </keyword>
+<identifier> Memory </identifier>
+<compileSubroutineCall>
+<symbol> . </symbol>
+<identifier> deAlloc </identifier>
+<symbol> ( </symbol>
+<compileExpressionList>
+<compileExpression>
+<compileTerm>
+<keyword> this </keyword>
+</compileTerm>
+</compileExpression>
+</compileExpressionList>
+<symbol> ) </symbol>
+</compileSubroutineCall>
+<symbol> ; </symbol>
+</compileDo>
+<returnStatement>
+<keyword> return </keyword>
+<symbol> ; </symbol>
+</returnStatement>
+</compileStatements>
+<symbol> } </symbol>
+</subroutineDec>
+<subroutineDec>
+<keyword> method </keyword>
+<keyword> void </keyword>
+<identifier> show </identifier>
+<symbol> ( </symbol>
+<parameterList>
+</parameterList>
+<symbol> ) </symbol>
+<symbol> { </symbol>
+<compileStatements>
+<compileDo>
+<keyword> do </keyword>
+<identifier> Screen </identifier>
+<compileSubroutineCall>
+<symbol> . </symbol>
+<identifier> setColor </identifier>
+<symbol> ( </symbol>
+<compileExpressionList>
+<compileExpression>
+<compileTerm>
+<keyword> true </keyword>
+</compileTerm>
+</compileExpression>
+</compileExpressionList>
+<symbol> ) </symbol>
+</compileSubroutineCall>
+<symbol> ; </symbol>
+</compileDo>
+<compileDo>
+<keyword> do </keyword>
+<identifier> draw </identifier>
+<compileSubroutineCall>
+<symbol> ( </symbol>
+<compileExpressionList>
+<symbol> ) </symbol>
+</compileSubroutineCall>
+<symbol> ; </symbol>
+</compileDo>
+<returnStatement>
+<keyword> return </keyword>
+<symbol> ; </symbol>
+</returnStatement>
+</compileStatements>
+<symbol> } </symbol>
+</subroutineDec>
+<subroutineDec>
+<keyword> method </keyword>
+<keyword> void </keyword>
+<identifier> hide </identifier>
+<symbol> ( </symbol>
+<parameterList>
+</parameterList>
+<symbol> ) </symbol>
+<symbol> { </symbol>
+<compileStatements>
+<compileDo>
+<keyword> do </keyword>
+<identifier> Screen </identifier>
+<compileSubroutineCall>
+<symbol> . </symbol>
+<identifier> setColor </identifier>
+<symbol> ( </symbol>
+<compileExpressionList>
+<compileExpression>
+<compileTerm>
+<keyword> false </keyword>
+</compileTerm>
+</compileExpression>
+</compileExpressionList>
+<symbol> ) </symbol>
+</compileSubroutineCall>
+<symbol> ; </symbol>
+</compileDo>
+<compileDo>
+<keyword> do </keyword>
+<identifier> draw </identifier>
+<compileSubroutineCall>
+<symbol> ( </symbol>
+<compileExpressionList>
+<symbol> ) </symbol>
+</compileSubroutineCall>
+<symbol> ; </symbol>
+</compileDo>
+<returnStatement>
+<keyword> return </keyword>
+<symbol> ; </symbol>
+</returnStatement>
+</compileStatements>
+<symbol> } </symbol>
+</subroutineDec>
+<subroutineDec>
+<keyword> method </keyword>
+<keyword> void </keyword>
+<identifier> draw </identifier>
+<symbol> ( </symbol>
+<parameterList>
+</parameterList>
+<symbol> ) </symbol>
+<symbol> { </symbol>
+<compileStatements>
+<compileDo>
+<keyword> do </keyword>
+<identifier> Screen </identifier>
+<compileSubroutineCall>
+<symbol> . </symbol>
+<identifier> drawRectangle </identifier>
+<symbol> ( </symbol>
+<compileExpressionList>
+<compileExpression>
+<compileTerm>
+<identifier> x </identifier>
+</compileTerm>
+</compileExpression>
+<symbol> , </symbol>
+<compileExpression>
+<compileTerm>
+<identifier> y </identifier>
+</compileTerm>
+</compileExpression>
+<symbol> , </symbol>
+<compileExpression>
+<compileTerm>
+<identifier> x </identifier>
+</compileTerm>
+<symbol> + </symbol>
+<compileTerm>
+<integerConstant> 5 </integerConstant>
+</compileTerm>
+</compileExpression>
+<symbol> , </symbol>
+<compileExpression>
+<compileTerm>
+<identifier> y </identifier>
+</compileTerm>
+<symbol> + </symbol>
+<compileTerm>
+<integerConstant> 5 </integerConstant>
+</compileTerm>
+</compileExpression>
+</compileExpressionList>
+<symbol> ) </symbol>
+</compileSubroutineCall>
+<symbol> ; </symbol>
+</compileDo>
+<returnStatement>
+<keyword> return </keyword>
+<symbol> ; </symbol>
+</returnStatement>
+</compileStatements>
+<symbol> } </symbol>
+</subroutineDec>
+<subroutineDec>
+<keyword> method </keyword>
+<keyword> int </keyword>
+<identifier> getLeft </identifier>
+<symbol> ( </symbol>
+<parameterList>
+</parameterList>
+<symbol> ) </symbol>
+<symbol> { </symbol>
+<compileStatements>
+<returnStatement>
+<keyword> return </keyword>
+<compileExpression>
+<compileTerm>
+<identifier> x </identifier>
+</compileTerm>
+</compileExpression>
+<symbol> ; </symbol>
+</returnStatement>
+</compileStatements>
+<symbol> } </symbol>
+</subroutineDec>
+<subroutineDec>
+<keyword> method </keyword>
+<keyword> int </keyword>
+<identifier> getRight </identifier>
+<symbol> ( </symbol>
+<parameterList>
+</parameterList>
+<symbol> ) </symbol>
+<symbol> { </symbol>
+<compileStatements>
+<returnStatement>
+<keyword> return </keyword>
+<compileExpression>
+<compileTerm>
+<identifier> x </identifier>
+</compileTerm>
+<symbol> + </symbol>
+<compileTerm>
+<integerConstant> 5 </integerConstant>
+</compileTerm>
+</compileExpression>
+<symbol> ; </symbol>
+</returnStatement>
+</compileStatements>
+<symbol> } </symbol>
+</subroutineDec>
+<subroutineDec>
+<keyword> method </keyword>
+<keyword> void </keyword>
+<identifier> setDestination </identifier>
+<symbol> ( </symbol>
+<parameterList>
+<keyword> int </keyword>
+<identifier> destx </identifier>
+<symbol> , </symbol>
+<keyword> int </keyword>
+<identifier> desty </identifier>
+</parameterList>
+<symbol> ) </symbol>
+<symbol> { </symbol>
+<varDec>
+<keyword> var </keyword>
+<keyword> int </keyword>
+<identifier> dx </identifier>
+<symbol> , </symbol>
+<identifier> dy </identifier>
+<symbol> , </symbol>
+<identifier> temp </identifier>
+<symbol> ; </symbol>
+</varDec>
+<compileStatements>
+<letStatement>
+<keyword> let </keyword>
+<identifier> lengthx </identifier>
+<symbol> = </symbol>
+<compileExpression>
+<compileTerm>
+<identifier> destx </identifier>
+</compileTerm>
+<symbol> - </symbol>
+<compileTerm>
+<identifier> x </identifier>
+</compileTerm>
+</compileExpression>
+<symbol> ; </symbol>
+</letStatement>
+<letStatement>
+<keyword> let </keyword>
+<identifier> lengthy </identifier>
+<symbol> = </symbol>
+<compileExpression>
+<compileTerm>
+<identifier> desty </identifier>
+</compileTerm>
+<symbol> - </symbol>
+<compileTerm>
+<identifier> y </identifier>
+</compileTerm>
+</compileExpression>
+<symbol> ; </symbol>
+</letStatement>
+<letStatement>
+<keyword> let </keyword>
+<identifier> dx </identifier>
+<symbol> = </symbol>
+<compileExpression>
+<compileTerm>
+<identifier> Math </identifier>
+<compileSubroutineCall>
+<symbol> . </symbol>
+<identifier> abs </identifier>
+<symbol> ( </symbol>
+<compileExpressionList>
+<compileExpression>
+<compileTerm>
+<identifier> lengthx </identifier>
+</compileTerm>
+</compileExpression>
+</compileExpressionList>
+<symbol> ) </symbol>
+</compileSubroutineCall>
+</compileTerm>
+</compileExpression>
+<symbol> ; </symbol>
+</letStatement>
+<letStatement>
+<keyword> let </keyword>
+<identifier> dy </identifier>
+<symbol> = </symbol>
+<compileExpression>
+<compileTerm>
+<identifier> Math </identifier>
+<compileSubroutineCall>
+<symbol> . </symbol>
+<identifier> abs </identifier>
+<symbol> ( </symbol>
+<compileExpressionList>
+<compileExpression>
+<compileTerm>
+<identifier> lengthy </identifier>
+</compileTerm>
+</compileExpression>
+</compileExpressionList>
+<symbol> ) </symbol>
+</compileSubroutineCall>
+</compileTerm>
+</compileExpression>
+<symbol> ; </symbol>
+</letStatement>
+<letStatement>
+<keyword> let </keyword>
+<identifier> invert </identifier>
+<symbol> = </symbol>
+<compileExpression>
+<compileTerm>
+<symbol> ( </symbol>
+<compileExpression>
+<compileTerm>
+<identifier> dx </identifier>
+</compileTerm>
+</compileExpression>
+<symbol> &lt </symbol>
+</compileTerm>
+</compileExpression>
+<identifier> dy </identifier>
+</letStatement>
+</compileStatements>
+<symbol> ) </symbol>
+</subroutineDec>
+<symbol> ; </symbol>
+</class>
