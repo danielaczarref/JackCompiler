@@ -71,7 +71,7 @@ class AnalisadorSintatico:
 
         self.printClosingXMLNameplate("class")
         self.symbolTable.printStaticTable("Static Table")
-        self.symbolTable.printFieldTable("Field Table")
+        # self.symbolTable.printFieldTable("Field Table")
 
         return True  # Tudo ok, é uma classe
 
