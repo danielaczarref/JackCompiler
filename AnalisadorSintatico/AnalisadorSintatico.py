@@ -1,5 +1,6 @@
 from JackTokenizer.JackTokenizer import JackTokenizer
 from CodeGenerator.symbol import SymbolTable
+from CodeGenerator.CodeWriter import  CodeWriter
 import re
 
 
@@ -7,11 +8,10 @@ import re
 
 class AnalisadorSintatico:
 
-    def __init__(self, input_file):
-        self.input_file = input_file
-        self.tokenizer = JackTokenizer(input_file)
-        self.output = open(input_file.split(".")[0]+".out", "a")
-        self.errorMSG = None
+    def __init__(self, input_file_name):
+        self.tokenizer = JackTokenizer(input_file_name)
+
+        self.codeWriter = CodeWriter(input_file_name)
         self.symbolTable = SymbolTable()
         self.className = None
 
@@ -19,11 +19,11 @@ class AnalisadorSintatico:
 
     def compile(self):
         if(self.compileClass()):
-            print("Success: {} compiled".format(self.input_file))
-            self.output.close()
+            # print("Success: {} compiled".format(self.input_file))
+            self.codeWriter.close()
         else:
-            print("Error while compiling file: {}".format(self.input_file) + "\n Error: "+ self.errorMSG)
-            self.output.close()
+            # print("Error while compiling file: {}".format(self.input_file) + "\n Error: "+ self.errorMSG)
+            self.codeWriter.close()
 
 
     def printXMLNameplate(self):
@@ -33,7 +33,7 @@ class AnalisadorSintatico:
 
     def printOpenningXMLNameplate(self, tag):
         pass
-
+        #
         # print("{}<{}>".format("", tag), file=self.output)
 
     def printClosingXMLNameplate(self, tag):

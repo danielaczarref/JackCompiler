@@ -5,7 +5,6 @@ class SymbolTable():
 
 
         self.subroutineTable = {}
-        # self.fieldTable = {}
         self.staticTable = {}
 
 
@@ -46,9 +45,6 @@ class SymbolTable():
     def returnIdentifier(self, key):
         if(key in self.staticTable):
             return self.staticTable[key]
-
-        elif(key in self.fieldTable):
-            return self.fieldTable[key]
 
         elif(key in self.subroutineTable):
             return self.subroutineTable[key]
