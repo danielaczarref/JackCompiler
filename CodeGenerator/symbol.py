@@ -1,66 +1,71 @@
 
-class SymbolTable():
+class SymbolTable(dict):
 
-    def __init__(self):
+    def __init__(self, *args):
 
+        dict.__init__(self, *args)
 
         self.subroutineTable = {}
         self.staticTable = {}
 
+        self.fieldTable = {}
 
-        self.static_counter = 0
-        self.arg_counter = 0
-        self.field_counter = 0
-        self.var_counter = 0
+        self._count = {
+            'STATIC': 0,
+            'ARG': 0,
+            'FIELD': 0,
+            'VAR': 0
+        }
+
+    def getCount(self, kind):
+        return self._count[kind]
 
     def addElement(self, name, _type, kind):
 
-        if(kind == "ARG"):
-            counter = self.arg_counter
-            self.subroutineTable[name] = [_type, kind, counter]
-            self.arg_counter += 1
 
-        elif (kind == "VAR"):
-            counter = self.var_counter
-            self.subroutineTable[name] = [_type, kind, counter]
-            self.var_counter += 1
+        try:
+            i = self._count[kind]
+        except KeyError:
+            raise Exception
 
+        if(kind in ["ARG", "VAR"]):
+            self.subroutineTable[name] = [_type, kind, i]
 
         elif (kind == "STATIC"):
-            counter = self.static_counter
-            self.staticTable[name] = [_type, kind, counter]
-            self.static_counter += 1
+
+            self.staticTable[name] = [_type, kind, i]
 
         else:
-            counter = self.field_counter
-            self.staticTable[name] = [_type, kind, counter]
-            self.field_counter += 1
+            self.fieldTable[name] = [_type, kind, i]
 
+        self._count[kind] += 1
+
+        return i
 
     def clear(self):
         self.subroutineTable.clear()
-        self.arg_counter = 0
-        self.var_counter = 0
+        self._count["ARG"] = 0
+        self._count["VAR"] = 0
 
-    def returnIdentifier(self, key):
+    def __getitem__(self, key):
         if(key in self.staticTable):
             return self.staticTable[key]
 
         elif(key in self.subroutineTable):
             return self.subroutineTable[key]
 
+        elif(key in self.fieldTable):
+            return self.fieldTable[key]
         else:
-            return False
-
-    def printStaticTable(self, ref):
-        print("\n---------------- Imprimindo tabela {}".format(ref))
-        for key in self.staticTable.keys():
-            print("{} -> {}".format(key, self.staticTable[key]))
-        print("------------------------------")
+            raise KeyError("{} not in any scope.")
 
 
-    def printSubroutineTable(self, ref):
-        print("\n---------------- Imprimindo tabela da subrotina: {}".format(ref))
-        for key in self.subroutineTable.keys():
-            print("{} -> {}".format(key, self.subroutineTable[key]))
-        print("------------------------------")
+    def get(self, key, default = (None, None, -1)):
+
+        try:
+            ret = self[key]
+        except KeyError:
+            ret = default
+        finally:
+            return ret
+
